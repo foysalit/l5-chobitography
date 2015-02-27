@@ -19,3 +19,12 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::group([
+	'prefix' => 'pictures',
+	'middleware' => 'auth',
+], function () {
+	Route::get('/', ['as' => 'pictures', 'uses' => 'Pictures@index']);
+	Route::get('upload', ['as' => 'pictures.upload.form', 'uses' => 'Pictures@upload']);
+	Route::post('upload', ['as' => 'pictures.upload.save', 'uses' => 'Pictures@uploadSave']);
+});

@@ -1,0 +1,59 @@
+@extends('app')
+
+@section('content')
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">Upload</div>
+				<div class="panel-body">
+					@if (count($errors) > 0)
+						<div class="alert alert-danger">
+							<strong>Whoops!</strong> There were some problems with your input.<br><br>
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+					@endif
+
+					<form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('pictures.upload.save') }}">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Caption</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="caption" value="{{ old('caption') }}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Details</label>
+							<div class="col-md-6">
+								<textarea class="form-control" name="details">{{ old('details') }}</textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Details</label>
+							<div class="col-md-6">
+								<input type="file" name="image" id="image" class="form-control">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<button type="submit" class="btn btn-primary">
+									Save
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@endsection
