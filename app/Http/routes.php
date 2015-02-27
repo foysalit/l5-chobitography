@@ -27,4 +27,5 @@ Route::group([
 	Route::get('/', ['as' => 'pictures', 'uses' => 'Pictures@index']);
 	Route::get('upload', ['as' => 'pictures.upload.form', 'uses' => 'Pictures@upload']);
 	Route::post('upload', ['as' => 'pictures.upload.save', 'uses' => 'Pictures@uploadSave']);
+	Route::get('{id}', ['as' => 'pictures.image', 'uses' => 'Pictures@showImage']);
 });

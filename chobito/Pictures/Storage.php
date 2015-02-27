@@ -14,7 +14,7 @@ class Storage
 		$this->dir = storage_path() .'/uploads/';
 
 		$picture = new Picture;
-		$picture->id = 
+		$picture->id = Picture::generateUid();
 		$picture->caption = $data['caption'];
 		$picture->details = $data['details'];
 		$picture->path = $this->saveImage($data['image']);

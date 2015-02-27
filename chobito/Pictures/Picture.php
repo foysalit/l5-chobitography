@@ -16,9 +16,8 @@ class Picture extends Entity
 		return $this->belongsTo('App\User', 'user_id');
 	}
 
-	public function displayUrl()
-	{	
-		$dir = storage_path();
-		return 
+	public function getDisplayUrlAttribute($value)
+	{
+		return route('pictures.image', $this->id);
 	}
 }

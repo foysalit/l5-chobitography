@@ -31,6 +31,12 @@ class Pictures extends Controller {
 		return view('pictures.upload');
 	}
 
+	public function showImage($id)
+	{
+		$picture = Picture::findByUid($id);
+		return response()->download($picture->path);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
