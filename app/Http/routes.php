@@ -13,7 +13,11 @@
 
 Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
+//Route::get('home', 'HomeController@index');
+Route::get('home',function ()
+{
+	var_dump(\Session::all());	
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -24,6 +28,7 @@ Route::group([
 	'prefix' => 'pictures',
 	'middleware' => 'auth',
 ], function () {
+	//dd(\Auth::user());
 	Route::get('/', ['as' => 'pictures', 'uses' => 'Pictures@index']);
 	Route::get('upload', ['as' => 'pictures.upload.form', 'uses' => 'Pictures@upload']);
 	Route::post('upload', ['as' => 'pictures.upload.save', 'uses' => 'Pictures@uploadSave']);
