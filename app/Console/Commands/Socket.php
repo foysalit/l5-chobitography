@@ -6,6 +6,7 @@ use Ratchet\ConnectionInterface;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
+use Ratchet\Session\SessionProvider;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
@@ -18,7 +19,7 @@ class Socket extends Command
 
     protected $description = "Serve the socket server.";
 
-    protected $chat;
+    protected $socket;
 
     public function __construct(SocketService $socket)
     {
@@ -35,10 +36,17 @@ class Socket extends Command
             $port = 7778;
         }
 
+        $sessionStore = $this->getLaravel()['session.store'];
+
+        $session = new SessionProvider(
+            $this->socket,
+            $sessionStore
+        );
+
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
-                    $this->socket
+                    $session->getHandler()
                 )
             ),
             $port

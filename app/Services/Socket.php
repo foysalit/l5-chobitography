@@ -12,14 +12,21 @@ class Socket implements MessageComponentInterface {
 
     public function onOpen(ConnectionInterface $conn) {
         // Store the new connection to send messages to later
-        var_dump("user check: ", \Auth::check(), \Session::all());
+        $conn->Session->set('user', 'foysal');
+        var_dump($conn->Session->all(), $conn->Session->getId());
         $this->clients->attach($conn);
 
         echo "New connection! ({$conn->resourceId})\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
-        var_dump("user check: ", \Auth::check(), \Session::all());
+        if ($msg == 'sync.session'){
+            var_dump('setting username');
+            echo $from->Session->set('user', 'username');
+        }
+
+
+        var_dump($from->Session->getId(), $from->Session->all());
         $numRecv = count($this->clients) - 1;
         \Log::info(sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
             , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's'));

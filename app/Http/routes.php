@@ -13,11 +13,14 @@
 
 Route::get('/', 'WelcomeController@index');
 
-//Route::get('home', 'HomeController@index');
+Route::get('home', 'HomeController@index');
 Route::get('home',function ()
 {
-	var_dump(\Session::all());	
+	var_dump(\Session::getId());	
 });
+
+Route::get('auth/login/{provider?}', 'Auth\SocialAuthController@init');
+Route::get('auth/login/{provider?}/callback', 'Auth\SocialAuthController@login');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
